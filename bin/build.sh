@@ -14,7 +14,7 @@ aws_region=$3
 which aws > /dev/null || { echo 'ERROR: aws-cli is not installed' ; exit 1; }
 
 # Connect into aws
-docker login --username AWS -p $(aws ecr get-login-password --region $aws_region) $aws_ecr_repository_url_with_tag || { echo 'ERROR: aws ecr login failed' ; exit 1; }
+echo -n $(aws ecr get-login-password --region $aws_region) | docker login --username AWS  $aws_ecr_repository_url_with_tag || { echo 'ERROR: aws ecr login failed' ; exit 1; }
 
 # Check that docker is installed and running
 which docker > /dev/null && docker ps > /dev/null || { echo 'ERROR: docker is not running' ; exit 1; }
